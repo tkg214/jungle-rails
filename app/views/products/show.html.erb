@@ -39,11 +39,13 @@
             </tr>
           </thead>
           <tbody>
-            <%= render @product.reviews %>
+            <%= render @product.reviews.sort.reverse %>
           </tbody>
         </table>
       </div>
     <% end %>
+
+    <%= render 'reviews/form' %>
 
   </article>
 

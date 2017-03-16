@@ -12,5 +12,10 @@
     <td>
       <%= review.created_at %>
     </td>
+    <% if session[:user_id] == user.id %>
+      <td>
+        <%= link_to fa_icon('trash'), [review.product, review], class: 'btn btn-sm btn-danger', method: :delete, data: { confirm: "Are you sure?" } %>
+      </td>
+    <% end %>
   </tr>
 <% end %>
