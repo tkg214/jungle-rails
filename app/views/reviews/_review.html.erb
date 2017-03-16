@@ -1,0 +1,16 @@
+<% if user = User.find_by(id: review.user_id)%>
+  <tr>
+    <td>
+      <p><%= review.description %></p>
+    </td>
+    <td>
+      <%= review.rating %>
+    </td>
+    <td>
+      <%= user.first_name %>
+    </td>
+    <td>
+      <%= review.created_at %>
+    </td>
+  </tr>
+<% end %>
