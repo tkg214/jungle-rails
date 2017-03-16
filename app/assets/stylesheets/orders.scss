@@ -1,13 +1,13 @@
-main section.products-index,
-main section.products-show {
+main section.orders-index,
+main section.orders-show {
 
-  .products {
+  .orders {
     display:         flex;
     flex-direction:  row;
     flex-wrap:       wrap;
     justify-content: space-around;
 
-    .product {
+    .order {
       // flex:      1;
       max-width: 260px;
       // so that footer within can be positioned absolutely
@@ -40,30 +40,6 @@ main section.products-show {
         transition: all 0.3s;
       }
 
-      aside.price {
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 10px;
-        background-color: #eee;
-        border-top-right-radius: 4px;
-        border-bottom-left-radius: 20px;
-        font-size: 0.8em;
-      }
-
-      aside.sold-out {
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 8.13px;
-        background-color: rgb(255, 0, 36);
-        color: white;
-        border-top-left-radius: 4px;
-        border-bottom-right-radius: 20px;
-        font-size: 1em;
-        opacity: 0.8;
-      }
-
       &:hover {
 
         border-color: #999;
@@ -77,7 +53,7 @@ main section.products-show {
   }
 }
 
-main section.products-show {
+main section.orders-show {
 
   .product-detail {
     img.main-img {
