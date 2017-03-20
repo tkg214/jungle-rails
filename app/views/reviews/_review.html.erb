@@ -10,7 +10,7 @@
       <%= user.first_name %>
     </td>
     <td>
-      <%= review.created_at %>
+      <%= review.created_at.to_formatted_s(:long) %>
     </td>
     <% if session[:user_id] == user.id %>
       <td>

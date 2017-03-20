@@ -27,13 +27,4 @@ class ApplicationController < ActionController::Base
     }
     cookies[:cart]
   end
-
-  protected
-
-  def authenticate
-    authenticate_or_request_with_http_digest do |name, password|
-      name == ENV['AUTH_USERNAME'] && password == ENV['AUTH_PASSWORD']
-    end
-  end
-
 end

@@ -23,29 +23,30 @@
           <dt>Price</dt>
           <dd><%= @product.price %></dd>
         </dl>
+        
+        <% unless @product.reviews.empty? %>
+          <div class="panel panel-default items">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Review</th>
+                  <th>Rating</th>
+                  <th>User</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render @product.reviews.sort.reverse %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+
+        <%= render 'reviews/form' %>
+
       </div>
 
     </div>
-
-    <% unless @product.reviews.empty? %>
-      <div class="panel panel-default items">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Review</th>
-              <th>Rating</th>
-              <th>User</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <%= render @product.reviews.sort.reverse %>
-          </tbody>
-        </table>
-      </div>
-    <% end %>
-
-    <%= render 'reviews/form' %>
 
   </article>
 

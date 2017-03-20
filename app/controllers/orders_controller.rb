@@ -14,6 +14,7 @@ class OrdersController < ApplicationController
     if order.valid?
       empty_cart!
       # send_order_confirmation(order)
+      # have mechanism for user ID authentication
       redirect_to order, notice: 'Your Order has been placed.'
     else
       redirect_to cart_path, error: order.errors.full_messages.first
@@ -30,14 +31,14 @@ class OrdersController < ApplicationController
     update_cart({})
   end
 
-  # def send_order_confirmation(order)
-  #   respond_to do |format|
-  #     OrderMailer.order_confirm(order).deliver_now
-  #
-  #     format.html { redirect_to(order, notice: 'Order was successfully placed.') }
-  #     format.json { render json: user, status: :created, location: order }
-  #   end
-  # end
+  def send_order_confirmation(order)
+    respond_to do |format|
+      OrderMailer.order_confirm(order).deliver_now
+
+      format.html { redirect_to(order, notice: 'Order was successfully placed.') }
+      format.json { render json: user, status: :created, location: order }
+    end
+  end
 
   def perform_stripe_charge
     Stripe::Charge.create(
