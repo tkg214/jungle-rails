@@ -17,4 +17,12 @@ class Product < ActiveRecord::Base
     quantity == 0
   end
 
+  def average_rating
+    if reviews.size.zero?
+      'Not yet rated'
+    else
+      "Overall rating: #{(reviews.map { |r| r[:rating].to_f }.sum / reviews.size).round(1)}/5"
+  end
+end
+
 end

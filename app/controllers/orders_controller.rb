@@ -1,7 +1,5 @@
 class OrdersController < ApplicationController
 
-  before_filter :authorize
-
   def show
     @order = Order.find(params[:id])
     @line_items = LineItem.where('order_id = ?', params[:id])
@@ -13,15 +11,26 @@ class OrdersController < ApplicationController
 
     if order.valid?
       empty_cart!
-      # send_order_confirmation(order)
-      # have mechanism for user ID authentication
       redirect_to order, notice: 'Your Order has been placed.'
     else
       redirect_to cart_path, error: order.errors.full_messages.first
     end
 
-  rescue Stripe::CardError => e
-    redirect_to cart_path, error: e.message
+    rescue Stripe::CardError => e
+      redirect_to cart_path, error: e.message
+
+
+    respond_to do |format|
+      if order.save
+        OrderMailer.conf_email(order).deliver_later
+
+        format.html { redirect_to(order, notice: 'Order was successfully created.') }
+        format.json { render json: order, status: :created, location: order }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: order.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private
@@ -29,15 +38,6 @@ class OrdersController < ApplicationController
   def empty_cart!
     # empty hash means no products in cart :)
     update_cart({})
-  end
-
-  def send_order_confirmation(order)
-    respond_to do |format|
-      OrderMailer.order_confirm(order).deliver_now
-
-      format.html { redirect_to(order, notice: 'Order was successfully placed.') }
-      format.json { render json: user, status: :created, location: order }
-    end
   end
 
   def perform_stripe_charge
